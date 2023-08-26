@@ -1,0 +1,9 @@
+numpy==1.25.2
+pandas==2.0.3
+pymongo==4.5.0
+python-dotenv==1.0.0
+PyVirtualDisplay==3.0
+selenium==4.11.2
+tqdm==4.66.1
+undetected_chromedriver==3.5.2
+webdriver_manager==4.0.0

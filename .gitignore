@@ -1,0 +1,7 @@
+*.xlsx
+*.csv
+*.history
+*.txt
+*.html
+*.xlsx#
+!requirements.txt
