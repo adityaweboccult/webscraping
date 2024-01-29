@@ -1,4 +1,4 @@
-# This will not scrape the featured companies runb final_clutch_featured_scrape.py to get all the featured companies too.
+# This will not scrape the featured companies run final_clutch_featured_scrape.py to get all the featured companies too.
 # NOTE : The featured companies will be mostly same in all the pages, thus if we have scraped featured companies from a single page then we do not need to scrape the featured companies again and again
 
 from selenium import webdriver
@@ -15,15 +15,18 @@ import os
 
 TOTAL_PAGES = 10
 COMPANIES_PER_PAGE = 1000
-EXCEL_SAVING_PATH = "excel_shared_to_scrape/third/clutch/colorado"
+CITY = "uk"
+folder_name = "5_fifth_09th_November"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/clutch/{CITY}_excels"
 MAIN_EXCEL_PATH = f"{EXCEL_SAVING_PATH}/main_clutch.xlsx"
 
 
 print("Saving the data into", EXCEL_SAVING_PATH)
-if not os.path.exists(EXCEL_SAVING_PATH):
-    os.mkdir(EXCEL_SAVING_PATH)
 
-current_page = "https://clutch.co/developers/artificial-intelligence?geona_id=26700"
+if not os.path.exists(EXCEL_SAVING_PATH):
+    os.makedirs(EXCEL_SAVING_PATH)
+
+current_page = "https://clutch.co/uk/developers/artificial-intelligence?1"
 
 columns = ["Name","Website","Rating","Strength","Social Links","Founded Year","Time Zone","Services","Focus Areas"]
 main_df = pd.DataFrame(columns=columns)
@@ -50,7 +53,9 @@ for page in range(TOTAL_PAGES):
     
 
     company_names_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='company_title directory_profile']")
-    company_websites_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='website-link__item']")
+
+    # below line takes the company website from the homepage
+    # company_websites_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='website-link__item']")
     inside_company_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='company_title directory_profile']")
 
 
@@ -70,21 +75,21 @@ for page in range(TOTAL_PAGES):
     
     company_names = [current.text for current in company_names_driver]
     temp_company_inside_urls = [current.get_attribute("href") for current in inside_company_driver]
-    company_websites = [current.get_attribute("href") for current in company_websites_driver]
+    # company_websites = [current.get_attribute("href") for current in company_websites_driver]
 
 
 
 
     # Now applying for the featured companies
 
-    company_names_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='ppc-website-link']")
-    company_websites_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='ppc-website-link']")
-    inside_company_driver = driver.find_elements(by = By.XPATH, value = "//div[@class='company prompt-target col-md-12 prompt-target-new-bookmark']/div/a[1]")
+    # company_names_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='ppc-website-link']")
+    # company_websites_driver = driver.find_elements(by = By.XPATH, value = "//a[@class='ppc-website-link']")
+    # inside_company_driver = driver.find_elements(by = By.XPATH, value = "//div[@class='company prompt-target col-md-12 prompt-target-new-bookmark']/div/a[1]")
 
-    for name,website,inside_company in zip(company_names_driver,company_websites_driver,inside_company_driver):
-        temp_company_inside_urls.append(inside_company.get_attribute("href"))
-        company_names.append(name.text)
-        company_websites.append(website.get_attribute("href"))
+    # for name,website,inside_company in zip(company_names_driver,company_websites_driver,inside_company_driver):
+    #     temp_company_inside_urls.append(inside_company.get_attribute("href"))
+    #     company_names.append(name.text)
+    #     company_websites.append(website.get_attribute("href"))
 
 
     print(f"Total Companies", len(company_names))
@@ -95,6 +100,7 @@ for page in range(TOTAL_PAGES):
     try :
 
         COMPANIES_PER_PAGE = min(COMPANIES_PER_PAGE,total_companies)
+        print("Companies for this page is",(COMPANIES_PER_PAGE))
         # i = 0
 
         for company_url in temp_company_inside_urls[:COMPANIES_PER_PAGE]:
@@ -108,6 +114,17 @@ for page in range(TOTAL_PAGES):
 
             print(company_url)
             driver.get(company_url)
+
+
+
+            # Getting comparny url
+
+            try:
+                company_url_driver = driver.find_element(by=By.XPATH, value = '//li[@class="profile-quick-menu--visit"]/a')
+                company_url = company_url_driver.get_attribute("href")
+            except:
+                company_url = "Not available"
+            company_websites.append(company_url)
 
             # Getting ratings
 
@@ -276,6 +293,7 @@ for page in range(TOTAL_PAGES):
 
             
         # sleep(5)
+        print(f"total rating {len(ratings)}, total strength {len(people_strength)}, total all_social_links {len(all_social_links)}, total founded_year {len(founded_year)}, total time_zones {len(time_zones)}, total services {len(services)}, total focus_areas {len(focus_areas)}, total company_names {len(company_names)}, total company_websites {len(company_websites)}")
 
         df = pd.DataFrame(columns=columns)
         df["Rating"] = ratings

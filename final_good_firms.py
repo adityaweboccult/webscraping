@@ -12,29 +12,31 @@ import os
 
 
 COMPANIES_PER_PAGE = 1000
-TOTAL_PAGES = 3
-EXCEL_SAVING_PATH = "excel_shared_to_scrape/third/goodfirm/texas"
-MAIN_EXCEL_PATH = f"{EXCEL_SAVING_PATH}/main_good_firm_v3.xlsx"
+TOTAL_PAGES = 10
+CITY = "uk"
+folder_name = "5_fifth_09th_November"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/goodfirm/{CITY}_excels"
+MAIN_EXCEL_PATH = f"{EXCEL_SAVING_PATH}/main_good_firm_v1.xlsx"
 
 print("Saving the data into", EXCEL_SAVING_PATH)
 
 display = Display(visible=0, size=(800, 600))
 display.start()
 
-# current_page = "https://www.goodfirms.co/artificial-intelligence/texas"
-current_page = "https://www.goodfirms.co/artificial-intelligence/texas?page=2"
+current_page = "https://www.goodfirms.co/artificial-intelligence/uk"
+# current_page = "https://www.goodfirms.co/artificial-intelligence/texas?page=2"
 
 if not os.path.exists(EXCEL_SAVING_PATH):
-    os.mkdir(EXCEL_SAVING_PATH)
+    os.makedirs(EXCEL_SAVING_PATH)
 
 columns = ["Name","Website","Rating","Strength","About","Social Links","Founded Year","Services","Focus Areas"]
 main_df = pd.DataFrame(columns=columns)
 
 
-for page in range(1,TOTAL_PAGES):
+for page in range(TOTAL_PAGES):
     print("Running Page", page+1)
 
-    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome()
 
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
@@ -49,6 +51,7 @@ for page in range(1,TOTAL_PAGES):
 
     try:        
         next_page = driver.find_element(by = By.XPATH, value = "//li[@class='next-page']/a").get_attribute("href")
+        # next_page = current_page.replace("?")
         print("Next page", next_page)
         current_page = next_page
 

@@ -7,7 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pyvirtualdisplay import Display
-
 from time import sleep
 import pandas as pd
 import os
@@ -15,11 +14,11 @@ from tqdm import tqdm
 
 
 COMPANIES_PER_PAGE = 1000
-TOTAL_PAGES = 3
-CITY = "texas"
-EXCEL_SAVING_PATH = f"excel_shared_to_scrape/third/themanifest/{CITY}_excels"
+TOTAL_PAGES = 1
+CITY = "unknown"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/fourth_21st_September/themanifest/{CITY}_excels"
 MAIN_EXCEL_PATH = f"{EXCEL_SAVING_PATH}/main_themanisfest.xlsx"
-main_link = "https://themanifest.com/artificial-intelligence/companies/austin"
+main_link = "https://themanifest.com/jp/artificial-intelligence/companies"
 
 
 
@@ -63,11 +62,12 @@ for page in range(TOTAL_PAGES):
     complete_data = dict()
 
     company_name_website_driver = driver.find_elements(by = By.XPATH, value="//a[@class='track-website-visit']")
-    about_driver = driver.find_elements(by = By.XPATH, value = "//div[@class='provider-summary']")
+    about_driver = driver.find_elements(by = By.XPATH, value = "//div[@class='provider-card__body']/div[1]")
+    # about_driver = driver.find_elements(by = By.XPATH, value = "//div[@class='provider-summary']")
+    
     strength_driver = driver.find_elements(by = By.XPATH, value = "//ul[@class='provider-card__details provider-details']/li[2]/span")
 
     
-
 
     company_names = [current.text for current in company_name_website_driver]
     company_websites = [current.get_attribute("href") for current in company_name_website_driver]
@@ -76,10 +76,33 @@ for page in range(TOTAL_PAGES):
 
     total_companies = len(company_names)
     print("Total Companies",len(company_names))
+    print("total length of about driver",len(company_abouts))
+    print(company_abouts)
 
     for i in range(len(company_name_website_driver)):
         name = company_names[i].lower()
         website = company_websites[i]
+
+        # k = 0
+        # company_abouts_copy = company_abouts.copy()
+        # total_about = len(company_abouts_copy)
+        # print("total about",total_about)
+        # for j in range(total_about):
+        #     temp_about = company_abouts[j]
+        #     # print(i)
+        #     print(name)
+        #     print(temp_about.lower())
+        #     # print()
+        #     # company_abouts.pop(i)
+        #     if name in temp_about.lower():
+        #         about = temp_about
+        #         print("Matched")
+        #         break
+        # for temp_about in range(company_abouts):
+        #     if name in temp_about.lower():
+
+
+
         about = company_abouts[i]
         strength = company_strengths[i]
         complete_data[name] = [name,website,about,strength]

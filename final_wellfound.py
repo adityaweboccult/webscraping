@@ -16,15 +16,18 @@ import os
 
 # we have total 15 pages
 COMPANIES_PER_AGE = 1000
-TOTAL_PAGES = 3
+TOTAL_PAGES = 10
 # max we have 15 pages
 # CURRENT_PAGE = 1
 
-CITY = "texas"
-EXCEL_SAVING_PATH = f"excel_shared_to_scrape/third/wellfound/{CITY}_excels"
-SAVING_PATH = f"excel_shared_to_scrape/third/wellfound/{CITY}_txts"
+CITY = "uk"
+folder_name = "5_fifth_09th_November"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/wellfound/{CITY}_excels"
+SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/wellfound/{CITY}_txts"
 # Downloaded page url or the actual url
-MAIN_PAGE = f"/home/wot-aditya/Aditya/Web Scraping/excel_shared_to_scrape/third/wellfound/well_found_page3.html"
+# MAIN_PAGE = f"/home/wot-aditya/Aditya/Web Scraping/excel_shared_to_scrape/third/wellfound/well_found_page3.html"
+MAIN_PAGE = f"https://wellfound.com/startups/l/united-kingdom/artificial-intelligence"
+
 next_page_link = None
 
 
@@ -52,7 +55,7 @@ main_df = pd.DataFrame(columns=columns)
 
 
 
-for CURRENT_PAGE in range(3,TOTAL_PAGES+1):
+for CURRENT_PAGE in range(9,TOTAL_PAGES+1):
 
     print("Running page number", CURRENT_PAGE)
     if next_page_link == None:

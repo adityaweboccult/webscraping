@@ -15,16 +15,18 @@ import os
 
 
 
-TOTAL_PAGES = 3
+TOTAL_PAGES = 1
 COMPANIES_PER_PAGE = 1000
-EXCEL_SAVING_PATH = "excel_shared_to_scrape/third/arizona"
+CITY = "uk"
+folder_name = "5_fifth_09th_November"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/clutch/{CITY}_excels"
 MAIN_EXCEL_PATH = f"{EXCEL_SAVING_PATH}/main_clutch_featured.xlsx"
 
 print("Saving the data into", EXCEL_SAVING_PATH)
 if not os.path.exists(EXCEL_SAVING_PATH):
     os.mkdir(EXCEL_SAVING_PATH)
 
-current_page = "https://clutch.co/developers/artificial-intelligence?geona_id=26831"
+current_page = "https://clutch.co/uk/developers/artificial-intelligence?1"
 
 columns = ["Name","Website","Rating","Strength","Social Links","Founded Year","Time Zone","Services","Focus Areas"]
 main_df = pd.DataFrame(columns=columns)

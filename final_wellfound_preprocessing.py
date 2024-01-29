@@ -5,10 +5,11 @@ import pandas as pd
 from tqdm import tqdm
 
 
-CITY = "texas"
-EXCEL_SAVING_PATH = f"excel_shared_to_scrape/third/wellfound/{CITY}_excels"
-SAVING_PATH = f"excel_shared_to_scrape/third/wellfound/{CITY}_txts"
-TOTAL_PAGES = 3
+CITY = "uk"
+folder_name = "5_fifth_09th_November"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/wellfound/{CITY}_excels"
+SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/wellfound/{CITY}_txts"
+TOTAL_PAGES = 8
 MAIN_DF_PATH = f"{EXCEL_SAVING_PATH}/main_wellfound_till_page_{TOTAL_PAGES}_v1.xlsx"
 SAVE = True
 
@@ -22,7 +23,7 @@ else:
     main_df = pd.read_excel(MAIN_DF_PATH)
 
 
-for CURRENT_PAGE in tqdm(range(3,TOTAL_PAGES+1)):
+for CURRENT_PAGE in tqdm(range(1,TOTAL_PAGES+1)):
 # CURRENT_PAGE = 1
 # try:
     with open(f"{SAVING_PATH}/focus_areas_page_{CURRENT_PAGE}.txt", "r") as f:

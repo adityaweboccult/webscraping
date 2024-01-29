@@ -15,19 +15,22 @@ import os
 from tqdm import tqdm
 import random
 
+# tcxhf7e
+
 # This variable should be greater than the total companies present in a single page, e.g. if we know maximum that maximu could be present is 20 then this variable should be greater than 20
 COMPANIES_PER_PAGE = 1000
 # 
 # Total pages to scrape
 #Total Pages 9
 TOTAL_PAGES = 1
-CITY = "arizona"
-EXCEL_SAVING_PATH = f"excel_shared_to_scrape/third/beststartup/{CITY}_excels"
+CITY = "japan_ai"
+folder_name = "fourth_21st_September"
+EXCEL_SAVING_PATH = f"excel_shared_to_scrape/{folder_name}/beststartup/{CITY}_excels"
 
 print("Saving excel file to",EXCEL_SAVING_PATH)
 
 #give the website name with ?page=<page_no>
-main_link = "https://beststartup.us/71-best-arizona-artificial-intelligence-companies-and-startups/"
+main_link = "https://beststartup.asia/101-top-japanese-artificial-intelligence-companies-and-startups-of-2021/"
 
 # Inorder to use the virtual display, the website pop will not open 
 display = Display(visible=0, size=(800, 600))
@@ -98,7 +101,7 @@ for page in range(1,TOTAL_PAGES+1):
     # COMPANIES_PER_PAGE = min(COMPANIES_PER_PAGE,1)
     COMPANIES_PER_PAGE = min(COMPANIES_PER_PAGE,len(inside_company_urls))
 
-    for i,company_url in tqdm(enumerate(inside_company_urls)):
+    for i,company_url in tqdm(enumerate(inside_company_urls[-6:])):
     # for company_url in ["https://www.crunchbase.com/organization/gametech-market"]: 
 
         print("Website number",i+1)
